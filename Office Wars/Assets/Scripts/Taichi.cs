@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Taichi : MonoBehaviour {
     private float duration;
+    private float cooldown;
     // Update is called once per frame
     void Update () {
        
@@ -12,5 +13,6 @@ public class Taichi : MonoBehaviour {
             Destroy(this.gameObject);
     }
     //collider currently causes problems. we want a halo like shield.
+    //do trigger mechanism
 }
 

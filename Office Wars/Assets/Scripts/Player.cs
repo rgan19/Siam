@@ -24,9 +24,9 @@ public class Player : MonoBehaviour {
     public int score;
 
     //Game objects
-    public GameObject bulletSpawnPoint;
+    public GameObject arrowSpawnPoint;
     public float waitTime;
-    public GameObject bullet;
+    public GameObject arrow;
     public GameObject taichiObj;
     public GameObject playerObj;
 
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour {
     //Instantiate an arrow object to shoot at current direction character is facing
     public void Shoot()
     {
-        Instantiate(bullet.transform, bulletSpawnPoint.transform.position,bulletSpawnPoint.transform.rotation);
+        Instantiate(arrow.transform, arrowSpawnPoint.transform.position,arrowSpawnPoint.transform.rotation);
     }
 
     //Instantiate a taichi shield around character to reflect all incoming projectiles for x seconds
@@ -114,5 +114,17 @@ public class Player : MonoBehaviour {
         currHealth += amount;
         currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
         updateUIHealth();
+    }
+
+    //Add skill drop from map to player
+    public void AddSkill()
+    {
+
+    }
+
+    //Use added skill of player
+    public void UseAddedSkill()
+    {
+
     }
 }
