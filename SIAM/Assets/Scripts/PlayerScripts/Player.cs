@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public float drag;
     public float terminalRotationSpeed;
     public VirtualJoystick joystick;
-
+    private float stunDuration;
     //public GameObject camera;
 
     //Health system
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
     public float waitTime;
     public GameObject arrow;
     public GameObject taichiObj;
-
+  
     private Rigidbody controller;
     private GameObject taichiShield;
 
@@ -39,7 +39,8 @@ public class Player : MonoBehaviour {
         controller.drag = drag;
         taichiShield = taichiObj;
         currHealth = startHealth;
-        updateUIHealth();
+        UpdateUIHealth();
+        stunDuration = 0;
     }
 
     // Update is called once per frame
@@ -56,26 +57,33 @@ public class Player : MonoBehaviour {
             Destroy(this.gameObject);
         else
         {
-            if (joystick.inputVector != Vector3.zero)
-            {
-                dir = joystick.inputVector;
-                controller.MovePosition(transform.position + dir);
-                transform.forward = dir;
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-                taichiShield.transform.position = transform.position;
+            if (stunDuration <= 0)
+            { 
+                stunDuration = 0;
+                if (joystick.inputVector != Vector3.zero)
+                {
+                    dir = joystick.inputVector;
+                    controller.MovePosition(transform.position + dir);
+                    transform.forward = dir;
+                    transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                    taichiShield.transform.position = transform.position;
+                }
+
+                //TODO: detect projectiles using triggers in order to know what to do
+                //boss projectile: - hp, player projectile, stun? pickups: do smth
+
+
+                //shoot testing, can be removed later
+                if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
+                {
+                    Shoot();
+                }
             }
-
-            //TODO: detect projectiles using triggers in order to know what to do
-            //boss projectile: - hp, player projectile, stun? pickups: do smth
-
-
-            //shoot testing, can be removed later
-            if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
+            else
             {
-                Shoot();
+                stunDuration -= 1 * Time.deltaTime;
             }
         }
-
     }
 
     //Instantiate an arrow object to shoot at current direction character is facing
@@ -95,7 +103,7 @@ public class Player : MonoBehaviour {
     }
 
     //Update UI to display current hp user has
-    void updateUIHealth()
+    void UpdateUIHealth()
     {
         for (int i = 0; i < maxHealth; i++)
         {
@@ -115,7 +123,7 @@ public class Player : MonoBehaviour {
     {
         currHealth += amount;
         currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
-        updateUIHealth();
+        UpdateUIHealth();
     }
 
     //Add skill drop from map to player
@@ -127,6 +135,34 @@ public class Player : MonoBehaviour {
     //Use added skill of player
     public void UseAddedSkill()
     {
+
+    }
+
+    // if touch object that triggers effect
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("SkillDrop"))
+        {
+            // get a random skill
+            AddHp(1);
+            Destroy(other.gameObject);
+        }
+    }
+    // if collide onto other objects
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("BossProjectile"))
+        {
+            AddHp(-1);
+            stunDuration += 1f;
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Arrow"))
+        {
+            //set stun
+            stunDuration += 1f;
+            Destroy(other.gameObject);
+        }
 
     }
 }

@@ -12,7 +12,7 @@ public class Taichi : MonoBehaviour {
         if (duration >= 2)
             Destroy(this.gameObject);
     }
-    //collider currently causes problems. we want a halo like shield.
-    //do trigger mechanism
+    // changing the way it works
+
 }
 

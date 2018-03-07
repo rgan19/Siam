@@ -314,10 +314,12 @@
     <Compile Include="Assets\Scripts\PlayerScripts\Arrow.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerCamera.cs" />
-    <Compile Include="Assets\Scripts\PlayerScripts\SkillDrop.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\SkillCrate.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Taichi.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\VirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\ProjectileMove.cs" />
+    <Compile Include="Assets\Scripts\SpawnScripts\SpawnPlayers.cs" />
+    <Compile Include="Assets\Scripts\SpawnScripts\SpawnSkillDrops.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
