@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour {
 	void Update () {
 		//time from start
 		time += Time.deltaTime;
-		Debug.Log (time);
+	//	Debug.Log (time);
 
 		if (time > 5.0f) {
 			speed = 60.0f;

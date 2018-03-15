@@ -26,6 +26,7 @@ public class SpawnSkillDrops : MonoBehaviour {
 
             Vector3 spawnPos = new Vector3(Random.Range(-boundaries.x / 2, boundaries.x / 2), transform.position.y, Random.Range(-boundaries.z / 2, boundaries.z / 2));
             Instantiate(skillCrate, spawnPos + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
+            Debug.Log("Spawned a crate at "+spawnPos.ToString()+" after waiting for "+spawnWait+" seconds.");
             yield return new WaitForSeconds(spawnWait);
             
          }

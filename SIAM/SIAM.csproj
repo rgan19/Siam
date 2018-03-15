@@ -314,6 +314,7 @@
     <Compile Include="Assets\Scripts\PlayerScripts\Arrow.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\SkillCooldown.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\SkillCrate.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Taichi.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\VirtualJoystick.cs" />

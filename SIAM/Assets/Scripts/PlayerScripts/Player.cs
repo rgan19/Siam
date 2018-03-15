@@ -77,10 +77,12 @@ public class Player : MonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
                 {
                     Shoot();
+                    Debug.Log("Shoot arrow succeed");
                 }
             }
             else
             {
+                Debug.Log("Player stunned for "+stunDuration+" seconds");
                 stunDuration -= 1 * Time.deltaTime;
             }
         }
@@ -124,6 +126,7 @@ public class Player : MonoBehaviour {
         currHealth += amount;
         currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
         UpdateUIHealth();
+        Debug.Log("Current health is " + currHealth + " after " + amount + " hp");
     }
 
     //Add skill drop from map to player
@@ -143,6 +146,7 @@ public class Player : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("SkillDrop"))
         {
+            Debug.Log("Player touched skill crate");
             // get a random skill
             AddHp(1);
             Destroy(other.gameObject);
@@ -153,12 +157,14 @@ public class Player : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("BossProjectile"))
         {
+            Debug.Log("Player hit by boss projectile");
             AddHp(-1);
             stunDuration += 1f;
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Arrow"))
         {
+            Debug.Log("Player hit by other player arrow");
             //set stun
             stunDuration += 1f;
             Destroy(other.gameObject);
