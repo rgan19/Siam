@@ -225,4 +225,4 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 1016732773961212}
   waitTime: 0
   arrow: {fileID: 1922645687491454, guid: 1ca3b73748a8cd34f8475aa593ea1b59, type: 2}
-  taichiObj: {fileID: 1000011561281016, guid: 738c078743e37d34baf164992215b776, type: 2}
+  taichiObj: {fileID: 1683859569078876, guid: 6f317a77d5e4c4b4e98f7e7ca2122667, type: 2}

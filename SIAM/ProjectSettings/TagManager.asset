@@ -8,6 +8,9 @@ TagManager:
   - Arrow
   - SkillDrop
   - Platform
+  - ArrowButton
+  - TaichiButton
+  - TaichiSphere
   layers:
   - Default
   - TransparentFX

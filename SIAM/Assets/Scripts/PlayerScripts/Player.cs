@@ -32,6 +32,9 @@ public class Player : MonoBehaviour {
     private Rigidbody controller;
     private GameObject taichiShield;
 
+    private Button arrowButton;
+    private Button taichiButton;
+
     private void Start()
     {
         controller = GetComponent<Rigidbody>();
@@ -41,6 +44,8 @@ public class Player : MonoBehaviour {
         currHealth = startHealth;
         UpdateUIHealth();
         stunDuration = 0;
+        arrowButton = GameObject.FindWithTag("ArrowButton").GetComponent<Button>() as Button;
+        taichiButton = GameObject.FindWithTag("TaichiButton").GetComponent<Button>() as Button;
     }
 
     // Update is called once per frame
@@ -54,43 +59,38 @@ public class Player : MonoBehaviour {
             if (dir.magnitude > 1)
                 dir.Normalize();*/
         if (currHealth <= 0)
+        {
             Destroy(this.gameObject);
+            // TODO: Change the game camera to view top down and see the whole map.
+        }
         else
         {
-            if (stunDuration <= 0)
-            { 
-                stunDuration = 0;
-                if (joystick.inputVector != Vector3.zero)
-                {
-                    dir = joystick.inputVector;
-                    controller.MovePosition(transform.position + dir);
-                    transform.forward = dir;
-                    transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-                    taichiShield.transform.position = transform.position;
-                }
-
-                //TODO: detect projectiles using triggers in order to know what to do
-                //boss projectile: - hp, player projectile, stun? pickups: do smth
-
-
-                //shoot testing, can be removed later
-                if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
-                {
-                    Shoot();
-                    Debug.Log("Shoot arrow succeed");
-                }
-            }
-            else
+            if (joystick.inputVector != Vector3.zero)
             {
-                Debug.Log("Player stunned for "+stunDuration+" seconds");
-                stunDuration -= 1 * Time.deltaTime;
+                dir = joystick.inputVector;
+                controller.MovePosition(transform.position + dir);
+                transform.forward = dir;
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+                //if taichiShield is active
+                if(taichiShield!=null)
+                    taichiShield.transform.position = transform.position;
             }
+
+            //shoot testing, can be removed later
+            if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+                Debug.Log("Shoot arrow succeed");
+            }
+
         }
     }
 
     //Instantiate an arrow object to shoot at current direction character is facing
     public void Shoot()
     {
+        arrowButton.interactable = false;
         Instantiate(arrow.transform, arrowSpawnPoint.transform.position,arrowSpawnPoint.transform.rotation);
     }
 
@@ -129,18 +129,6 @@ public class Player : MonoBehaviour {
         Debug.Log("Current health is " + currHealth + " after " + amount + " hp");
     }
 
-    //Add skill drop from map to player
-    public void AddSkill()
-    {
-
-    }
-
-    //Use added skill of player
-    public void UseAddedSkill()
-    {
-
-    }
-
     // if touch object that triggers effect
     private void OnTriggerEnter(Collider other)
     {
@@ -148,10 +136,30 @@ public class Player : MonoBehaviour {
         {
             Debug.Log("Player touched skill crate");
             // get a random skill
-            AddHp(1);
+            if (!arrowButton.IsInteractable())
+            {
+                arrowButton.interactable = true;
+            }
+            //AddHp(1);
+            Destroy(other.gameObject);
+        }
+        if(other.gameObject.CompareTag("Arrow"))
+        {
+            // taichi shield is active, reflect projectile towards direction player is facing
+            if (taichiShield != null)
+            {
+
+            }
+            // get damaged since taichi shield is not active
+            else
+            {
+
+            }
+            AddHp(-1);
             Destroy(other.gameObject);
         }
     }
+    /* not using this function
     // if collide onto other objects
     private void OnCollisionEnter(Collision other)
     {
@@ -170,5 +178,5 @@ public class Player : MonoBehaviour {
             Destroy(other.gameObject);
         }
 
-    }
+    } */
 }
