@@ -17,13 +17,14 @@ public class PlayerCamera : MonoBehaviour {
         {
             Vector3 pos = new Vector3();
             pos.x = player.position.x;
-            pos.z = player.position.z - 7f;//dont minus for directly above
+            pos.z = player.position.z - 5f;//dont minus for directly above
             pos.y = player.position.y + height;
             transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smooth);
         }
         else
         {
-            //player dead
+            //player dead, change camera angle
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(0, height + 7f, -7), ref velocity, smooth);
         }
     }
 }

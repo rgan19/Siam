@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
         controller = GetComponent<Rigidbody>();
         controller.maxAngularVelocity = terminalRotationSpeed;
         controller.drag = drag;
-        taichiShield = taichiObj;
+        taichiShield = null;
         currHealth = startHealth;
         UpdateUIHealth();
         stunDuration = 0;
@@ -72,18 +72,22 @@ public class Player : MonoBehaviour {
                 transform.forward = dir;
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
-                //if taichiShield is active
-                if(taichiShield!=null)
-                    taichiShield.transform.position = transform.position;
+                
             }
-
+            //if taichiShield is active
+            if (taichiShield != null)
+                taichiShield.transform.position = transform.position;
             //shoot testing, can be removed later
             if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
             {
                 Shoot();
                 Debug.Log("Shoot arrow succeed");
             }
-
+            if (Input.GetKeyDown(KeyCode.B))//Input.GetMouseButtonDown(0))
+            {
+                Taichi();
+                Debug.Log("Shoot arrow succeed");
+            }
         }
     }
 
@@ -143,9 +147,16 @@ public class Player : MonoBehaviour {
             //AddHp(1);
             Destroy(other.gameObject);
         }
-        if(other.gameObject.CompareTag("Arrow"))
+    }
+
+    // if collide onto other objects (if it is other players, do nothing)
+    private void OnCollisionEnter(Collision other)
+    {
+        //if object is arrow
+        if (other.gameObject.CompareTag("Arrow"))
         {
-            // taichi shield is active, reflect projectile towards direction player is facing
+            Debug.Log("Player hit by arrow");
+            // taichi shield is active, reflect projectile 
             if (taichiShield != null)
             {
 
@@ -153,30 +164,11 @@ public class Player : MonoBehaviour {
             // get damaged since taichi shield is not active
             else
             {
-
+                AddHp(-1);
+                Destroy(other.gameObject);
             }
-            AddHp(-1);
-            Destroy(other.gameObject);
-        }
-    }
-    /* not using this function
-    // if collide onto other objects
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("BossProjectile"))
-        {
-            Debug.Log("Player hit by boss projectile");
-            AddHp(-1);
-            stunDuration += 1f;
-            Destroy(other.gameObject);
-        }
-        else if (other.gameObject.CompareTag("Arrow"))
-        {
-            Debug.Log("Player hit by other player arrow");
-            //set stun
-            stunDuration += 1f;
-            Destroy(other.gameObject);
+            
         }
 
-    } */
+    } 
 }
