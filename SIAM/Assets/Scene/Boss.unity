@@ -922,7 +922,7 @@ Prefab:
     - target: {fileID: 54675391453296568, guid: fa7d519a8d7b26d4eb78e455a86c9190,
         type: 2}
       propertyPath: m_Constraints
-      value: 14
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4327128598852478, guid: fa7d519a8d7b26d4eb78e455a86c9190, type: 2}
       propertyPath: m_LocalRotation.y
