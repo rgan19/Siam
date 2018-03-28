@@ -18,6 +18,8 @@ public class Player : NetworkBehaviour {
     //Health system
     private int maxHealth = 7;
     private int startHealth = 5;
+
+	[SyncVar]
     public int currHealth;
 
     public Image[] healthImages;
@@ -31,9 +33,10 @@ public class Player : NetworkBehaviour {
     public int score;
 
     //Game objects
-    public GameObject arrowSpawnPoint;
+	public Transform arrowSpawnPoint;
     public float waitTime;
     public GameObject arrow;
+	public GameObject arrowShot;
     public GameObject taichiObj;
   
     private Rigidbody controller;
@@ -41,6 +44,7 @@ public class Player : NetworkBehaviour {
 
     private Button arrowButton;
     private Button taichiButton;
+
 
     private void Start()
     {
@@ -52,11 +56,36 @@ public class Player : NetworkBehaviour {
         UpdateUIHealth();
         stunDuration = 0;
         //arrowButton = GameObject.FindWithTag("ArrowButton").GetComponent<Button>() as Button;
-        taichiButton = GameObject.FindWithTag("TaichiButton").GetComponent<Button>() as Button;
+        //taichiButton = GameObject.FindWithTag("TaichiButton").GetComponent<Button>() as Button;
     }
+
+
+	public override void OnStartLocalPlayer(){
+		GetComponent<MeshRenderer> ().material.color = Color.blue;
+		Camera.main.GetComponent<PlayerCamera> ().setTarget (gameObject.transform);
+		this.joystick = GameObject.FindGameObjectWithTag ("Joystick");
+		joystickBehavior = (VirtualJoystick)joystick.GetComponent (typeof(VirtualJoystick));
+
+		arrowButton = (Button) GameObject.FindGameObjectWithTag ("ArrowButton").GetComponent<Button> ();
+		arrowButton.interactable = false;
+		arrowButton.onClick.AddListener (Shoot);
+
+		taichiButton = (Button) GameObject.FindGameObjectWithTag ("TaichiButton").GetComponent<Button> ();
+
+		healthImages[0] = (Image) GameObject.FindGameObjectWithTag ("Life").GetComponent(typeof(Image));
+		healthImages[1] = (Image) GameObject.FindGameObjectWithTag ("Life2").GetComponent(typeof(Image));
+		healthImages[2] = (Image) GameObject.FindGameObjectWithTag ("Life3").GetComponent(typeof(Image));
+		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
+		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
+	}
+    
 
     // Update is called once per frame
    private void Update() {
+
+		if (!isLocalPlayer) {
+			return;
+		}
        
         Vector3 dir = Vector3.zero;
         // for keyboard movement
@@ -67,22 +96,26 @@ public class Player : NetworkBehaviour {
                 dir.Normalize();*/
         if (currHealth <= 0)
         {
-            Destroy(this.gameObject);
+            NetworkServer.Destroy(this.gameObject);
+			Debug.Log ("Dead");
             // TODO: Change the game camera to view top down and see the whole map.
         }
         else
         {
             if (joystickBehavior.inputVector != Vector3.zero)
             {
+				Debug.Log ("Player position" + transform.position);
                 dir = joystickBehavior.inputVector;
                 controller.MovePosition(transform.position + dir);
                 transform.forward = dir;
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
+
             //if taichiShield is active
             if (taichiShield != null)
                 taichiShield.transform.position = transform.position;
-            //shoot testing, can be removed later
+            
+			//shoot testing, can be removed later
             if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
             {
                 Shoot();
@@ -95,19 +128,30 @@ public class Player : NetworkBehaviour {
             }
         }
     }
+		
 
     //Instantiate an arrow object to shoot at current direction character is facing
     public void Shoot()
     {
         arrowButton.interactable = false;
-        Instantiate(arrow.transform, arrowSpawnPoint.transform.position,arrowSpawnPoint.transform.rotation);
-    }
+		CmdShoot ();
+		Debug.Log ("Shoot");
+	}
+
+	[Command]
+	public void CmdShoot(){
+		Debug.Log ("Arrow spawn position" + arrowSpawnPoint.position);
+		arrowShot = (GameObject) Instantiate(arrow, arrowSpawnPoint.position,arrowSpawnPoint.rotation);
+		NetworkServer.Spawn(arrowShot); //spawns on all clients through server
+		Debug.Log ("Cmd Shoot");
+	}
 
     //Instantiate a taichi shield around character to reflect all incoming projectiles for x seconds
     public void Taichi()
     {
         //spawn taichi shield for x seconds
         taichiShield = Instantiate(taichiObj,transform.position,transform.rotation);
+		Debug.Log ("Taichi called");
         //uses animation created by cyrus.
         //makes character immune for x seconds (disable rigidbody collider maybe)
         //makes projectiles that collides with character to be sent to direction player is facing.
@@ -130,13 +174,17 @@ public class Player : NetworkBehaviour {
     }
 
     //Add or deal damage to user, negative means damage
-    public void AddHp(int amount)
-    {
-        currHealth += amount;
-        currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
-        UpdateUIHealth();
-        Debug.Log("Current health is " + currHealth + " after " + amount + " hp");
-    }
+	[Command]
+	public void CmdAddHp(int amount){
+		if (!isLocalPlayer) {
+			return;
+		}
+		currHealth += amount;
+		currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
+		UpdateUIHealth();
+		Debug.Log("Current health is " + currHealth + " after " + amount + " hp");
+
+	}
 
     // if touch object that triggers effect
     private void OnTriggerEnter(Collider other)
@@ -145,12 +193,14 @@ public class Player : NetworkBehaviour {
         {
             Debug.Log("Player touched skill crate");
             // get a random skill
-            if (!arrowButton.IsInteractable())
+
+			if (!arrowButton.IsInteractable())
             {
                 arrowButton.interactable = true;
             }
             //AddHp(1);
-            Destroy(other.gameObject);
+            NetworkServer.Destroy(other.gameObject); //removes it on all clients
+			Debug.Log("Destroy");
         }
     }
 
@@ -169,32 +219,20 @@ public class Player : NetworkBehaviour {
             // get damaged since taichi shield is not active
             else
             {
-                AddHp(-1);
-                Destroy(other.gameObject);
+				//TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
+				//CmdAddHp (-1);
+				CmdDestroyArrow(other.gameObject);
+				Debug.Log ("Network Destroy arrow");
+
             }
             
         }
 
     }
-
-	public override void OnStartLocalPlayer(){
-		GetComponent<MeshRenderer> ().material.color = Color.blue;
-		Camera.main.GetComponent<PlayerCamera> ().setTarget (gameObject.transform);
-		this.joystick = GameObject.FindGameObjectWithTag ("Joystick");
-		joystickBehavior = (VirtualJoystick)joystick.GetComponent (typeof(VirtualJoystick));
-
-		Button btn = GameObject.FindGameObjectWithTag ("ArrowButton").GetComponent<Button> ();
-		btn.interactable = false;
-		btn.onClick.AddListener (Shoot);
-
-		healthImages[0] = (Image) GameObject.FindGameObjectWithTag ("Life").GetComponent(typeof(Image));
-		healthImages[1] = (Image) GameObject.FindGameObjectWithTag ("Life2").GetComponent(typeof(Image));
-		healthImages[2] = (Image) GameObject.FindGameObjectWithTag ("Life3").GetComponent(typeof(Image));
-		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
-		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
-
-	
+		
+	[Command]
+	public void CmdDestroyArrow(GameObject other){
+		NetworkServer.Destroy(other.gameObject);
 	}
-
 
 }

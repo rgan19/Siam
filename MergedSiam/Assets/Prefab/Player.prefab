@@ -224,15 +224,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  life: {fileID: 0}
-  life2: {fileID: 0}
-  life3: {fileID: 0}
-  life4: {fileID: 0}
-  life5: {fileID: 0}
   score: 0
-  arrowSpawnPoint: {fileID: 1016732773961212}
+  arrowSpawnPoint: {fileID: 4327128598852478}
   waitTime: 0
   arrow: {fileID: 1898324725676690, guid: 15c04481cc526a645ba7194a85dbb157, type: 2}
+  arrowShot: {fileID: 0}
   taichiObj: {fileID: 1683859569078876, guid: 6f317a77d5e4c4b4e98f7e7ca2122667, type: 2}
 --- !u!114 &114198047464967992
 MonoBehaviour:

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Arrow : MonoBehaviour {
+public class Arrow : NetworkBehaviour {
     public float initSpeed;
     public float maxVelocity;
     private Rigidbody rb;
@@ -29,6 +30,7 @@ public class Arrow : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+		
         oldVel = rb.velocity;
         // set max velocity arrow can travel at
         if(oldVel.magnitude >= maxVelocity)

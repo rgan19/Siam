@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SkillCrate : MonoBehaviour {
+public class SkillCrate : NetworkBehaviour {
 
     // User Inputs
     public float degreesPerSecond = 15.0f;
@@ -27,7 +28,7 @@ public class SkillCrate : MonoBehaviour {
         //allow crate to exist for a duration only
         if (duration <= 0)
         {
-            Destroy(this.gameObject);
+            NetworkServer.Destroy(this.gameObject); //TODO: check whether there's a diff using network serverhere
             Debug.Log("Crate destroyed after expiring");
         }
         else
