@@ -16,7 +16,7 @@ public class Player : NetworkBehaviour {
     //public GameObject camera;
 
     //Health system
-    private int maxHealth = 7;
+    private int maxHealth = 5;
     private int startHealth = 5;
 
 	[SyncVar]
@@ -77,6 +77,8 @@ public class Player : NetworkBehaviour {
 		healthImages[2] = (Image) GameObject.FindGameObjectWithTag ("Life3").GetComponent(typeof(Image));
 		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
 		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
+
+		Debug.Log (healthImages.Length);
 	}
     
 
@@ -104,7 +106,6 @@ public class Player : NetworkBehaviour {
         {
             if (joystickBehavior.inputVector != Vector3.zero)
             {
-				Debug.Log ("Player position" + transform.position);
                 dir = joystickBehavior.inputVector;
                 controller.MovePosition(transform.position + dir);
                 transform.forward = dir;
@@ -151,6 +152,7 @@ public class Player : NetworkBehaviour {
     {
         //spawn taichi shield for x seconds
         taichiShield = Instantiate(taichiObj,transform.position,transform.rotation);
+		NetworkServer.Spawn (taichiShield);
 		Debug.Log ("Taichi called");
         //uses animation created by cyrus.
         //makes character immune for x seconds (disable rigidbody collider maybe)
@@ -174,9 +176,9 @@ public class Player : NetworkBehaviour {
     }
 
     //Add or deal damage to user, negative means damage
-	[Command]
-	public void CmdAddHp(int amount){
-		if (!isLocalPlayer) {
+
+	public void AddHp(int amount){
+		if (!isServer) {
 			return;
 		}
 		currHealth += amount;
@@ -220,7 +222,7 @@ public class Player : NetworkBehaviour {
             else
             {
 				//TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
-				//CmdAddHp (-1);
+				AddHp (-1);
 				CmdDestroyArrow(other.gameObject);
 				Debug.Log ("Network Destroy arrow");
 
