@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23822390243562988}
   - component: {fileID: 114584304464876080}
   - component: {fileID: 114142011787352302}
+  - component: {fileID: 114867471548405906}
   m_Layer: 0
   m_Name: TaichiSphere
   m_TagString: TaichiSphere
@@ -115,9 +116,21 @@ MonoBehaviour:
     i13: 18
     i14: 38
     i15: 103
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114584304464876080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683859569078876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b079cac3244fc747a34d60fec473949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 5
+--- !u!114 &114867471548405906
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,7 +149,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1683859569078876}
   m_Material: {fileID: 13400000, guid: 85f725a2b70f43240aae8dc54a7b09a5, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

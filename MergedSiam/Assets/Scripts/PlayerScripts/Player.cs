@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour {
     public float terminalRotationSpeed;
     public VirtualJoystick joystickBehavior;
 	public GameObject joystick;
-    private float stunDuration;
+
     //public GameObject camera;
 
     //Health system
@@ -54,23 +54,22 @@ public class Player : NetworkBehaviour {
         taichiShield = null;
         currHealth = startHealth;
         UpdateUIHealth();
-        stunDuration = 0;
-        //arrowButton = GameObject.FindWithTag("ArrowButton").GetComponent<Button>() as Button;
-        //taichiButton = GameObject.FindWithTag("TaichiButton").GetComponent<Button>() as Button;
+
     }
 
 
 	public override void OnStartLocalPlayer(){
-		GetComponent<MeshRenderer> ().material.color = Color.blue;
+		GetComponent<MeshRenderer> ().material.color = Color.green;
 		Camera.main.GetComponent<PlayerCamera> ().setTarget (gameObject.transform);
 		this.joystick = GameObject.FindGameObjectWithTag ("Joystick");
 		joystickBehavior = (VirtualJoystick)joystick.GetComponent (typeof(VirtualJoystick));
 
 		arrowButton = (Button) GameObject.FindGameObjectWithTag ("ArrowButton").GetComponent<Button> ();
-		arrowButton.interactable = false;
-		arrowButton.onClick.AddListener (Shoot);
+		//arrowButton.interactable = false;
+		arrowButton.onClick.AddListener (CmdShoot);
 
 		taichiButton = (Button) GameObject.FindGameObjectWithTag ("TaichiButton").GetComponent<Button> ();
+        taichiButton.onClick.AddListener(CmdTaichi);
 
 		healthImages[0] = (Image) GameObject.FindGameObjectWithTag ("Life").GetComponent(typeof(Image));
 		healthImages[1] = (Image) GameObject.FindGameObjectWithTag ("Life2").GetComponent(typeof(Image));
@@ -78,7 +77,7 @@ public class Player : NetworkBehaviour {
 		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
 		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
 
-		Debug.Log (healthImages.Length);
+		Debug.Log ("Current health is "+healthImages.Length);
 	}
     
 
@@ -116,48 +115,34 @@ public class Player : NetworkBehaviour {
             if (taichiShield != null)
                 taichiShield.transform.position = transform.position;
             
-			//shoot testing, can be removed later
-            if (Input.GetKeyDown(KeyCode.Space))//Input.GetMouseButtonDown(0))
-            {
-                Shoot();
-                Debug.Log("Shoot arrow succeed");
-            }
-            if (Input.GetKeyDown(KeyCode.B))//Input.GetMouseButtonDown(0))
-            {
-                Taichi();
-                Debug.Log("Shoot arrow succeed");
-            }
         }
     }
 		
 
     //Instantiate an arrow object to shoot at current direction character is facing
-    public void Shoot()
+    [Command]
+    public void CmdShoot()
     {
         arrowButton.interactable = false;
-		CmdShoot ();
-		Debug.Log ("Shoot");
+        arrowShot = (GameObject)Instantiate(arrow, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
+        NetworkServer.Spawn(arrowShot); //spawns on all clients through server
+        Debug.Log ("Shoot");
 	}
 
-	[Command]
-	public void CmdShoot(){
-		Debug.Log ("Arrow spawn position" + arrowSpawnPoint.position);
-		arrowShot = (GameObject) Instantiate(arrow, arrowSpawnPoint.position,arrowSpawnPoint.rotation);
-		NetworkServer.Spawn(arrowShot); //spawns on all clients through server
-		Debug.Log ("Cmd Shoot");
-	}
 
     //Instantiate a taichi shield around character to reflect all incoming projectiles for x seconds
-    public void Taichi()
+    [Command]
+    public void CmdTaichi()
     {
         //spawn taichi shield for x seconds
-        taichiShield = Instantiate(taichiObj,transform.position,transform.rotation);
-		NetworkServer.Spawn (taichiShield);
-		Debug.Log ("Taichi called");
+        taichiShield = Instantiate(taichiObj, transform.position, transform.rotation);
+        NetworkServer.Spawn(taichiShield);
+        Debug.Log("Taichi called");
         //uses animation created by cyrus.
         //makes character immune for x seconds (disable rigidbody collider maybe)
         //makes projectiles that collides with character to be sent to direction player is facing.
     }
+
 
     //Update UI to display current hp user has
     void UpdateUIHealth()
