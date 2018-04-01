@@ -8,7 +8,7 @@ public class Taichi : MonoBehaviour {
 	// Update is called once per frame
 	private void Start()
 	{
-		//set ignore collision with player?
+		//set ignore collision with player solves the problem temporarily, but no idea what will happen with 2 or more players
 
 		shield_collider = GetComponent<Collider>();
 		GameObject[] allArrows = GameObject.FindGameObjectsWithTag("Player");

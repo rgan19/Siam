@@ -41,6 +41,7 @@ public class Player : NetworkBehaviour {
   
     private Rigidbody controller;
     private GameObject taichiShield;
+    
 
     private Button arrowButton;
     private Button taichiButton;
@@ -189,11 +190,6 @@ public class Player : NetworkBehaviour {
             NetworkServer.Destroy(other.gameObject); //removes it on all clients
 			Debug.Log("Destroy");
         }
-    }
-
-    // if collide onto other objects (if it is other players, do nothing)
-    private void OnCollisionEnter(Collision other)
-    {
         //if object is arrow
         if (other.gameObject.CompareTag("Arrow"))
         {
@@ -206,15 +202,14 @@ public class Player : NetworkBehaviour {
             // get damaged since taichi shield is not active
             else
             {
-				//TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
-				AddHp (-1);
-				CmdDestroyArrow(other.gameObject);
-				Debug.Log ("Network Destroy arrow");
+                //TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
+                AddHp(-1);
+                CmdDestroyArrow(other.gameObject);
+                Debug.Log("Network Destroy arrow");
 
             }
-            
-        }
 
+        }
     }
 		
 	[Command]
