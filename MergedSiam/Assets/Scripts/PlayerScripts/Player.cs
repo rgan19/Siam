@@ -19,7 +19,7 @@ public class Player : NetworkBehaviour {
     private int maxHealth = 5;
     private int startHealth = 5;
 
-	[SyncVar]
+	//[SyncVar]
     public int currHealth;
 
     public Image[] healthImages;
@@ -58,6 +58,12 @@ public class Player : NetworkBehaviour {
 
     }
 
+	public override void OnStartClient(){
+		base.OnStartClient ();
+		string _netID = GetComponent<NetworkIdentity> ().netId.ToString();
+		Player _player = GetComponent<Player> ();
+		GameManager.RegisterPlayer (_netID, _player);
+	}
 
 	public override void OnStartLocalPlayer(){
 		GetComponent<MeshRenderer> ().material.color = Color.green;
@@ -66,11 +72,12 @@ public class Player : NetworkBehaviour {
 		joystickBehavior = (VirtualJoystick)joystick.GetComponent (typeof(VirtualJoystick));
 
 		arrowButton = (Button) GameObject.FindGameObjectWithTag ("ArrowButton").GetComponent<Button> ();
-		//arrowButton.interactable = false;
-		arrowButton.onClick.AddListener (CmdShoot);
+		arrowButton.interactable = false;
+		arrowButton.onClick.AddListener (Shoot);
+
 
 		taichiButton = (Button) GameObject.FindGameObjectWithTag ("TaichiButton").GetComponent<Button> ();
-        taichiButton.onClick.AddListener(CmdTaichi);
+        taichiButton.onClick.AddListener(Taichi);
 
 		healthImages[0] = (Image) GameObject.FindGameObjectWithTag ("Life").GetComponent(typeof(Image));
 		healthImages[1] = (Image) GameObject.FindGameObjectWithTag ("Life2").GetComponent(typeof(Image));
@@ -119,12 +126,15 @@ public class Player : NetworkBehaviour {
         }
     }
 		
-
+	public void Shoot(){
+		arrowButton.interactable = false;
+		CmdShoot ();
+	}
     //Instantiate an arrow object to shoot at current direction character is facing
     [Command]
     public void CmdShoot()
     {
-        arrowButton.interactable = false;
+        //arrowButton.interactable = false;
         arrowShot = (GameObject)Instantiate(arrow, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
         NetworkServer.Spawn(arrowShot); //spawns on all clients through server
         Debug.Log ("Shoot");
@@ -132,7 +142,11 @@ public class Player : NetworkBehaviour {
 
 
     //Instantiate a taichi shield around character to reflect all incoming projectiles for x seconds
-    [Command]
+	public void Taichi(){
+		CmdTaichi ();
+	}
+
+	[Command]
     public void CmdTaichi()
     {
         //spawn taichi shield for x seconds
@@ -162,16 +176,19 @@ public class Player : NetworkBehaviour {
     }
 
     //Add or deal damage to user, negative means damage
-
-	public void AddHp(int amount){
-		if (!isServer) {
-			return;
-		}
+	[ClientRpc]
+	public void RpcAddHp(int amount){
+		
 		currHealth += amount;
 		currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
 		UpdateUIHealth();
 		Debug.Log("Current health is " + currHealth + " after " + amount + " hp");
 
+	}
+
+	[Command]
+	public void CmdAddHp(int amount){
+		RpcAddHp (amount);
 	}
 
     // if touch object that triggers effect
@@ -203,8 +220,9 @@ public class Player : NetworkBehaviour {
             else
             {
                 //TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
-                AddHp(-1);
+                CmdAddHp(-1);
                 CmdDestroyArrow(other.gameObject);
+				Destroy (other.gameObject);
                 Debug.Log("Network Destroy arrow");
 
             }
@@ -215,6 +233,7 @@ public class Player : NetworkBehaviour {
 	[Command]
 	public void CmdDestroyArrow(GameObject other){
 		NetworkServer.Destroy(other.gameObject);
+		Debug.Log ("Command Destroy");
 	}
 
 }
