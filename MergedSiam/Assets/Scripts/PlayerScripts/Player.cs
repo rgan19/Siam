@@ -19,7 +19,7 @@ public class Player : NetworkBehaviour {
     private int maxHealth = 5;
     private int startHealth = 5;
 
-	//[SyncVar]
+	[SyncVar]
     public int currHealth;
 
     public Image[] healthImages;
@@ -96,6 +96,7 @@ public class Player : NetworkBehaviour {
 			return;
 		}
        
+		Debug.Log (transform.position);
         Vector3 dir = Vector3.zero;
         // for keyboard movement
         /*    dir.x = Input.GetAxis("Horizontal");
@@ -145,12 +146,13 @@ public class Player : NetworkBehaviour {
 	public void Taichi(){
 		CmdTaichi ();
 	}
-
+		
 	[Command]
     public void CmdTaichi()
     {
         //spawn taichi shield for x seconds
         taichiShield = Instantiate(taichiObj, transform.position, transform.rotation);
+		taichiShield.transform.parent = transform;
         NetworkServer.Spawn(taichiShield);
         Debug.Log("Taichi called");
         //uses animation created by cyrus.
@@ -162,6 +164,9 @@ public class Player : NetworkBehaviour {
     //Update UI to display current hp user has
     void UpdateUIHealth()
     {
+		if (!isLocalPlayer) {
+			return;
+		}
         for (int i = 0; i < maxHealth; i++)
         {
             if (currHealth <= i)
@@ -178,7 +183,6 @@ public class Player : NetworkBehaviour {
     //Add or deal damage to user, negative means damage
 	[ClientRpc]
 	public void RpcAddHp(int amount){
-		
 		currHealth += amount;
 		currHealth = Mathf.Clamp(currHealth, 0, maxHealth);
 		UpdateUIHealth();
@@ -232,6 +236,9 @@ public class Player : NetworkBehaviour {
 		
 	[Command]
 	public void CmdDestroyArrow(GameObject other){
+		if (isLocalPlayer) {
+			return;
+		}
 		NetworkServer.Destroy(other.gameObject);
 		Debug.Log ("Command Destroy");
 	}
