@@ -322,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\BOXOPHOBIC\Skybox - Cubemap Extended\Shaders\Skybox - Cubemap Extended.shader" />
+    <None Include="Assets\Art\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\Fonts\OpenSans\License!.txt" />
     <None Include="Assets\Lobby\Documentation.txt" />
     <None Include="Assets\Lobby\Instruction.txt" />
