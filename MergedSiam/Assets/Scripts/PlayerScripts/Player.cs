@@ -46,16 +46,25 @@ public class Player : NetworkBehaviour {
     private Button arrowButton;
     private Button taichiButton;
 
+    //Animation
+    public Animator anim;
+    private int speedHash = Animator.StringToHash("Speed");
+    private int arrowHash = Animator.StringToHash("Arrow");
+    private int taichiHash = Animator.StringToHash("Taichi");
+    private int deathHash = Animator.StringToHash("Arrow");
+    public float delay;
+    public float move;
+
 
     private void Start()
     {
         controller = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         controller.maxAngularVelocity = terminalRotationSpeed;
         controller.drag = drag;
         taichiShield = null;
         currHealth = startHealth;
         UpdateUIHealth();
-
     }
 
 	public override void OnStartClient(){
@@ -98,6 +107,10 @@ public class Player : NetworkBehaviour {
        
 		Debug.Log (transform.position);
         Vector3 dir = Vector3.zero;
+
+        move = Mathf.Sqrt(Mathf.Pow(joystickBehavior.Horizontal(),2) + Mathf.Pow(joystickBehavior.Vertical(),2));
+        anim.SetFloat("Speed", move);
+        
         // for keyboard movement
         /*    dir.x = Input.GetAxis("Horizontal");
             dir.z = Input.GetAxis("Vertical");
@@ -106,6 +119,7 @@ public class Player : NetworkBehaviour {
                 dir.Normalize();*/
         if (currHealth <= 0)
         {
+            anim.SetTrigger("Death");
             NetworkServer.Destroy(this.gameObject);
 			Debug.Log ("Dead");
             // TODO: Change the game camera to view top down and see the whole map.
@@ -123,7 +137,7 @@ public class Player : NetworkBehaviour {
             //if taichiShield is active
             if (taichiShield != null)
                 taichiShield.transform.position = transform.position;
-            
+            else anim.SetBool("Taichi", false);
         }
     }
 		
@@ -136,6 +150,7 @@ public class Player : NetworkBehaviour {
     public void CmdShoot()
     {
         //arrowButton.interactable = false;
+        anim.SetTrigger("Arrow");
         arrowShot = (GameObject)Instantiate(arrow, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
         NetworkServer.Spawn(arrowShot); //spawns on all clients through server
         Debug.Log ("Shoot");
@@ -151,6 +166,10 @@ public class Player : NetworkBehaviour {
     public void CmdTaichi()
     {
         //spawn taichi shield for x seconds
+        if (!anim.GetBool("Taichi"))
+        {
+            anim.SetBool("Taichi", true);
+        }
         taichiShield = Instantiate(taichiObj, transform.position, transform.rotation);
 		taichiShield.transform.parent = transform;
         NetworkServer.Spawn(taichiShield);
