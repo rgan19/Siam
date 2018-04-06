@@ -47,13 +47,9 @@ public class Player : NetworkBehaviour {
     private Button taichiButton;
 
     //Animation
-    public Animator anim;
-    private int speedHash = Animator.StringToHash("Speed");
-    private int arrowHash = Animator.StringToHash("Arrow");
-    private int taichiHash = Animator.StringToHash("Taichi");
-    private int deathHash = Animator.StringToHash("Arrow");
+    private Animator anim;
     public float delay;
-    public float move;
+    private float move;
 
 
     private void Start()
@@ -81,7 +77,7 @@ public class Player : NetworkBehaviour {
 		joystickBehavior = (VirtualJoystick)joystick.GetComponent (typeof(VirtualJoystick));
 
 		arrowButton = (Button) GameObject.FindGameObjectWithTag ("ArrowButton").GetComponent<Button> ();
-		arrowButton.interactable = false;
+		arrowButton.interactable = true;
 		arrowButton.onClick.AddListener (Shoot);
 
 
@@ -104,6 +100,8 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
+
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
        
 		Debug.Log (transform.position);
         Vector3 dir = Vector3.zero;
@@ -137,7 +135,8 @@ public class Player : NetworkBehaviour {
             //if taichiShield is active
             if (taichiShield != null)
                 taichiShield.transform.position = transform.position;
-            else anim.SetBool("Taichi", false);
+            else if (anim.GetBool("Taichi"))
+                anim.SetBool("Taichi", false);
         }
     }
 		
@@ -166,11 +165,13 @@ public class Player : NetworkBehaviour {
     public void CmdTaichi()
     {
         //spawn taichi shield for x seconds
+        anim.SetTrigger("TaichiTrigger");
         if (!anim.GetBool("Taichi"))
         {
             anim.SetBool("Taichi", true);
         }
-        taichiShield = Instantiate(taichiObj, transform.position, transform.rotation);
+        Quaternion shieldRotate = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x + 270, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+        taichiShield = Instantiate(taichiObj, transform.position, shieldRotate);
 		taichiShield.transform.parent = transform;
         NetworkServer.Spawn(taichiShield);
         Debug.Log("Taichi called");
@@ -224,6 +225,10 @@ public class Player : NetworkBehaviour {
 
 			if (!arrowButton.IsInteractable())
             {
+                arrowButton.interactable = true;
+            } else
+            {
+                Shoot();
                 arrowButton.interactable = true;
             }
             //AddHp(1);

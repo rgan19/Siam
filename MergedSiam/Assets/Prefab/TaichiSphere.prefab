@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4836935783868244}
   - component: {fileID: 33928884682302138}
-  - component: {fileID: 135389345336700126}
   - component: {fileID: 23812787697885546}
   - component: {fileID: 114171768396003956}
   - component: {fileID: 114895215720500862}
   - component: {fileID: 114178888278885198}
+  - component: {fileID: 135777777702314284}
   m_Layer: 0
   m_Name: TaichiSphere
   m_TagString: TaichiSphere
@@ -38,13 +38,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947894158976666}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.54, y: 6.86, z: -1.69}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 1.1210307, y: 2.49, z: -2.9360955}
   m_LocalScale: {x: 3.8658366, y: 3.8658366, z: 3.8658366}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!23 &23812787697885546
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b079cac3244fc747a34d60fec473949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 10000
+  duration: 5
 --- !u!114 &114178888278885198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
     i15: 103
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!135 &135389345336700126
+--- !u!135 &135777777702314284
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

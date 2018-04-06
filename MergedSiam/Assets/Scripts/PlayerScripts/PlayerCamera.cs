@@ -16,7 +16,7 @@ public class PlayerCamera : MonoBehaviour {
         if (player != null)
         {
             Vector3 pos = new Vector3();
-            pos.x = player.position.x;
+            pos.x = player.position.x - 5f;
             pos.z = player.position.z - 5f;//dont minus for directly above
             pos.y = player.position.y + height;
             transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smooth);
@@ -24,7 +24,7 @@ public class PlayerCamera : MonoBehaviour {
         else
         {
             //player dead, change camera angle
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(0, height + 7f, -7), ref velocity, smooth);
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(0, height + 15f, -7), ref velocity, smooth);
         }
     }
 

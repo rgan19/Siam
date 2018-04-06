@@ -15,7 +15,8 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         {
             pos.x = (pos.x / bgImg.rectTransform.sizeDelta.x);
             pos.y = (pos.y / bgImg.rectTransform.sizeDelta.y);
-            inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
+            //inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
+            inputVector = new Vector3(pos.x * 3 - 1, 0, pos.y * 3 - 1);
             inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
 
             joystickImg.rectTransform.anchoredPosition = new Vector3(inputVector.x * (bgImg.rectTransform.sizeDelta.x / 3), inputVector.z * (bgImg.rectTransform.sizeDelta.y / 3));

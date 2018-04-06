@@ -24,15 +24,15 @@ public class SkillCrate : NetworkBehaviour {
     // Update is called once per frame
     void Update()
     {
-        duration -= 1 * Time.deltaTime;
-        //allow crate to exist for a duration only
-        if (duration <= 0)
-        {
-            NetworkServer.Destroy(this.gameObject); //TODO: check whether there's a diff using network serverhere
-            Debug.Log("Crate destroyed after expiring");
-        }
-        else
-        {
+        //duration -= 1 * Time.deltaTime;
+        ////allow crate to exist for a duration only
+        //if (duration <= 0)
+        //{
+        //    NetworkServer.Destroy(this.gameObject); //TODO: check whether there's a diff using network serverhere
+        //    Debug.Log("Crate destroyed after expiring");
+        //}
+        //else
+        //{
             // Spin object around Y-Axis
             transform.Rotate(new Vector3(0f, Time.deltaTime * degreesPerSecond, 0f), Space.World);
 
@@ -48,7 +48,7 @@ public class SkillCrate : NetworkBehaviour {
             {
                 posOffset = transform.position;
             }
-        }
+        //}
     }
 
 
