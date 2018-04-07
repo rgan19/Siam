@@ -61,6 +61,7 @@ public class Player : NetworkBehaviour {
         taichiShield = null;
         currHealth = startHealth;
         UpdateUIHealth();
+        this.transform.position = new Vector3(Random.Range(10, -10), 3, Random.Range(10, -10));
     }
 
 	public override void OnStartClient(){
@@ -171,13 +172,21 @@ public class Player : NetworkBehaviour {
             anim.SetBool("Taichi", true);
         }
         Quaternion shieldRotate = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x + 270, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
-        taichiShield = Instantiate(taichiObj, transform.position, shieldRotate);
-		taichiShield.transform.parent = transform;
+        taichiShield = Instantiate(taichiObj, transform.position, transform.rotation);
+        //taichiShield.transform.parent = transform;
         NetworkServer.Spawn(taichiShield);
+        RpcTaichi(taichiShield);
         Debug.Log("Taichi called");
         //uses animation created by cyrus.
         //makes character immune for x seconds (disable rigidbody collider maybe)
         //makes projectiles that collides with character to be sent to direction player is facing.
+    }
+
+    //For taichi to be following player client side
+    [ClientRpc]
+    public void RpcTaichi(GameObject taichi)
+    {
+        taichi.transform.parent = transform;
     }
 
 
