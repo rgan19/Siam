@@ -828,6 +828,7 @@ MonoBehaviour:
   arrow: {fileID: 1062054713125148, guid: 36f04ff8f2d9de549863601c70bd6781, type: 2}
   arrowShot: {fileID: 0}
   taichiObj: {fileID: 1947894158976666, guid: 6f317a77d5e4c4b4e98f7e7ca2122667, type: 2}
+  endGame: {fileID: 1507100605108650, guid: 9292733b9caf26641b03a0fc80fb4386, type: 2}
   delay: 0
 --- !u!114 &114393052720073630
 MonoBehaviour:
@@ -841,7 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.1
+  m_SendInterval: 0.083333336
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

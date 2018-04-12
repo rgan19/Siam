@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Networking.Match;
+using UnityEngine.SceneManagement;
+using Prototype.NetworkLobby;
 
 public class Player : NetworkBehaviour {
 
@@ -23,14 +26,14 @@ public class Player : NetworkBehaviour {
     public int currHealth;
 
     public Image[] healthImages;
-	private GameObject life;
-	private GameObject life2;
-	private GameObject life3;
-	private GameObject life4;
-	private GameObject life5;
+
+	[HideInInspector]
+	private GameObject life, life2, life3, life4, life5;
 
     //Scoring
     public int score;
+
+	public string state{get;set;}
 
     //Game objects
 	public Transform arrowSpawnPoint;
@@ -39,10 +42,14 @@ public class Player : NetworkBehaviour {
 	public GameObject arrowShot;
     public GameObject taichiObj;
   
+	//UI END GAME
+	public GameObject endGame;
+	private Text endStatusText;
+	private GameObject gameOverOverlay;
+
     private Rigidbody controller;
     private GameObject taichiShield;
     
-
     private Button arrowButton;
     private Button taichiButton;
 
@@ -71,6 +78,11 @@ public class Player : NetworkBehaviour {
 		GameManager.RegisterPlayer (_netID, _player);
 	}
 
+	public void Init(){
+		state = "alive";
+		score = 0;
+	}
+
 	public override void OnStartLocalPlayer(){
 		GetComponent<MeshRenderer> ().material.color = Color.green;
 		Camera.main.GetComponent<PlayerCamera> ().setTarget (gameObject.transform);
@@ -81,7 +93,6 @@ public class Player : NetworkBehaviour {
 		arrowButton.interactable = true;
 		arrowButton.onClick.AddListener (Shoot);
 
-
 		taichiButton = (Button) GameObject.FindGameObjectWithTag ("TaichiButton").GetComponent<Button> ();
         taichiButton.onClick.AddListener(Taichi);
 
@@ -91,7 +102,8 @@ public class Player : NetworkBehaviour {
 		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
 		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
 
-		Debug.Log ("Current health is "+healthImages.Length);
+		gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
+		gameOverOverlay.SetActive (false);
 	}
     
 
@@ -101,10 +113,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-       
-		Debug.Log (transform.position);
         Vector3 dir = Vector3.zero;
 
         move = Mathf.Sqrt(Mathf.Pow(joystickBehavior.Horizontal(),2) + Mathf.Pow(joystickBehavior.Vertical(),2));
@@ -119,8 +128,9 @@ public class Player : NetworkBehaviour {
         if (currHealth <= 0)
         {
             anim.SetTrigger("Death");
-            NetworkServer.Destroy(this.gameObject);
-			Debug.Log ("Dead");
+			Death ();
+			//CmdDestroyObject (this.gameObject);
+			//Destroy (this.gameObject);
             // TODO: Change the game camera to view top down and see the whole map.
         }
         else
@@ -181,15 +191,13 @@ public class Player : NetworkBehaviour {
         //makes character immune for x seconds (disable rigidbody collider maybe)
         //makes projectiles that collides with character to be sent to direction player is facing.
     }
-
-    //For taichi to be following player client side
+		
     [ClientRpc]
     public void RpcTaichi(GameObject taichi)
     {
         taichi.transform.parent = transform;
     }
-
-
+		
     //Update UI to display current hp user has
     void UpdateUIHealth()
     {
@@ -235,14 +243,11 @@ public class Player : NetworkBehaviour {
 			if (!arrowButton.IsInteractable())
             {
                 arrowButton.interactable = true;
-            } else
-            {
-                Shoot();
-                arrowButton.interactable = true;
-            }
-            //AddHp(1);
-            NetworkServer.Destroy(other.gameObject); //removes it on all clients
+			} 
+			CmdDestroyObject (other.gameObject);
+			Destroy (other.gameObject);
 			Debug.Log("Destroy");
+
         }
         //if object is arrow
         if (other.gameObject.CompareTag("Arrow"))
@@ -256,24 +261,93 @@ public class Player : NetworkBehaviour {
             // get damaged since taichi shield is not active
             else
             {
-                //TODO: Fix HP, null pointer causes the arrow to not be destroyed in the next line
                 CmdAddHp(-1);
-                CmdDestroyArrow(other.gameObject);
+                CmdDestroyObject(other.gameObject);
 				Destroy (other.gameObject);
-                Debug.Log("Network Destroy arrow");
-
+                
             }
 
         }
     }
 		
+	//destroys objects in server
 	[Command]
-	public void CmdDestroyArrow(GameObject other){
+	public void CmdDestroyObject(GameObject other){
 		if (isLocalPlayer) {
 			return;
 		}
 		NetworkServer.Destroy(other.gameObject);
-		Debug.Log ("Command Destroy");
+	}
+
+	//Player Death
+	void Death(){
+		CmdReducePlayerCount (); //reduce player count in GameManager
+		gameOverOverlay.SetActive (true);
+		CmdDestroyObject (this.gameObject); //destroy on all clients
+		Destroy(this.gameObject); //destroy on local player
+		EndPlayerGame ();
+		Debug.Log("Death");
+	}
+
+
+	[Command]
+	void CmdReducePlayerCount(){
+		//GameManager.KillPlayer ();
+		string _netID = GetComponent<NetworkIdentity> ().netId.ToString();
+		string playerNameID = "Player " + _netID;
+		GameManager.DeregisterPlayer (playerNameID);
+		Debug.Log("Number of players alive: "+ GameManager.GetNumberOfPlayersAlive());
+		if (GameManager.GetNumberOfPlayersAlive () <= 1) {
+			ShowEndGame ();
+		} 
+	}
+
+
+
+	void ShowEndGame(){
+		//if player is alive should be tagged
+		foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")){
+			player.GetComponent<Player>().EndGame ();
+		}
+	}
+
+	//End whole game. Find the only player alive and set win screen. 
+	void EndGame(){
+		string _netID = GetComponent<NetworkIdentity> ().netId.ToString();
+		string playerNameID = "Player " + _netID;
+		Debug.Log ("Player ID: " + playerNameID);
+		Dictionary<string, Player> listOfPlayers = GameManager.players;
+		if (listOfPlayers.ContainsKey(playerNameID)) {
+			Debug.Log (playerNameID + " win");
+			GameObject endSplash;
+			endSplash = (GameObject)Instantiate (endGame);
+			gameOverOverlay.SetActive (true);
+			endSplash.GetComponent<Text> ().text = "You win!";
+			endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform> (), false);
+		} else {
+			Debug.Log ("Reached into end game check winner");
+		}
+
+	}
+
+
+
+	//Each player result when they lose
+	void EndPlayerGame(){
+		GameObject endSplash;
+		endSplash = (GameObject)Instantiate (endGame);
+		endSplash.GetComponent<Text> ().text = "You lost!";
+		//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform>(), false);
+		//StartCoroutine (CountEndScene());
+
+	}
+
+	//Incomplete: TO go back to lobby
+	IEnumerator CountEndScene(){
+		Debug.Log ("Going back to lobby");
+		yield return new WaitForSeconds (3);
+		GameObject.FindGameObjectWithTag ("LobbyManager").GetComponent<LobbyManager> ().OnStopHost ();
+		SceneManager.LoadScene("Lobby");
 	}
 
 }

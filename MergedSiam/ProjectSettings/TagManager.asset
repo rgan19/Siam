@@ -16,6 +16,9 @@ TagManager:
   - Life3
   - Life4
   - Life5
+  - Result
+  - LobbyManager
+  - GameOverOverlay
   layers:
   - Default
   - TransparentFX

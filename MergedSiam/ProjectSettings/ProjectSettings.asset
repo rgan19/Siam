@@ -641,9 +641,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 9e5b3b91-4171-421f-bf70-ff3178f605d1
+  cloudProjectId: 4e83a61f-fada-451a-9f5c-93043d46ee04
   projectName: MergedSiam
-  organizationId: kyraw
+  organizationId: unity_vell6ggm0mrqpw
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

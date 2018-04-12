@@ -32,9 +32,9 @@ public class SpawnSkillDrops : NetworkBehaviour {
 			}
 			Vector3 spawnPos = new Vector3(Random.Range(-boundaries.x / 2, boundaries.x / 2), transform.position.y, Random.Range(-boundaries.z / 2, boundaries.z / 2));
 			var spawnedCrate = Instantiate(skillCrate, spawnPos + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
-			Debug.Log("Spawned a crate at "+spawnPos.ToString()+" after waiting for "+spawnWait+" seconds.");
+			//Debug.Log("Spawned a crate at "+spawnPos.ToString()+" after waiting for "+spawnWait+" seconds.");
 			NetworkServer.Spawn (spawnedCrate);
-			Debug.Log ("Network Server spawn crate");
+			//Debug.Log ("Network Server spawn crate");
 			yield return new WaitForSeconds(spawnWait);
             
          }
