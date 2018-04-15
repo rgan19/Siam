@@ -53,6 +53,9 @@ public class Player : NetworkBehaviour {
     private Button arrowButton;
     private Button taichiButton;
 
+	Timer timer;
+
+
     //Animation
     private Animator anim;
     public float delay;
@@ -69,6 +72,8 @@ public class Player : NetworkBehaviour {
         currHealth = startHealth;
         UpdateUIHealth();
         this.transform.position = new Vector3(Random.Range(10, -10), 3, Random.Range(10, -10));
+		GameObject timerObj = GameObject.Find ("Timer");
+		timer = timerObj.GetComponent<Timer> ();
     }
 
 	public override void OnStartClient(){
@@ -110,6 +115,11 @@ public class Player : NetworkBehaviour {
     // Update is called once per frame
    private void Update() {
 
+		if (timer.isTimeUp) {
+			ShowTimeUp ();
+		
+		}
+		
 		if (!isLocalPlayer) {
 			return;
 		}
@@ -340,6 +350,19 @@ public class Player : NetworkBehaviour {
 		//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform>(), false);
 		//StartCoroutine (CountEndScene());
 
+	}
+
+	void EndGameWhenTimesUp() {
+		GameObject endSplash;
+		endSplash = (GameObject)Instantiate (endGame);
+		endSplash.GetComponent<Text> ().text = "Times up you win!";
+	}
+	void ShowTimeUp() {
+		foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")){
+			player.GetComponent<Player>().EndGameWhenTimesUp ();
+			CmdDestroyObject (this.gameObject); //destroy on all clients
+			Destroy(this.gameObject); //destroy on local player
+		}
 	}
 
 	//Incomplete: TO go back to lobby
