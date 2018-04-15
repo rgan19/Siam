@@ -41,6 +41,10 @@ public class Player : NetworkBehaviour {
     public GameObject arrow;
 	public GameObject arrowShot;
     public GameObject taichiObj;
+
+    public GameObject laser;
+    public GameObject bow;
+    public GameObject explosion;
   
 	//UI END GAME
 	public GameObject endGame;
@@ -71,7 +75,18 @@ public class Player : NetworkBehaviour {
         taichiShield = null;
         currHealth = startHealth;
         UpdateUIHealth();
+        bow.SetActive(false);
+
+        // Destroys laser if not local player
+        if (!isLocalPlayer)
+        {
+            Destroy(laser);
+        }
+
+        // Spawns on random location in arena
         this.transform.position = new Vector3(Random.Range(10, -10), 3, Random.Range(10, -10));
+
+        // Get Timer
 		GameObject timerObj = GameObject.Find ("Timer");
 		timer = timerObj.GetComponent<Timer> ();
     }
@@ -138,7 +153,7 @@ public class Player : NetworkBehaviour {
         if (currHealth <= 0)
         {
             anim.SetTrigger("Death");
-			Death ();
+            Death();
 			//CmdDestroyObject (this.gameObject);
 			//Destroy (this.gameObject);
             // TODO: Change the game camera to view top down and see the whole map.
@@ -160,8 +175,17 @@ public class Player : NetworkBehaviour {
                 anim.SetBool("Taichi", false);
         }
     }
-		
-	public void Shoot(){
+
+    private void FixedUpdate()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("ArrowAnim"))
+        {
+            bow.SetActive(true);
+        }
+        else bow.SetActive(false);
+    }
+
+    public void Shoot(){
 		arrowButton.interactable = false;
 		CmdShoot ();
 	}
@@ -272,9 +296,9 @@ public class Player : NetworkBehaviour {
             else
             {
                 CmdAddHp(-1);
+                Instantiate(explosion, this.transform.position, this.transform.rotation);
                 CmdDestroyObject(other.gameObject);
 				Destroy (other.gameObject);
-                
             }
 
         }
@@ -292,7 +316,7 @@ public class Player : NetworkBehaviour {
 	//Player Death
 	void Death(){
 		CmdReducePlayerCount (); //reduce player count in GameManager
-		gameOverOverlay.SetActive (true);
+        gameOverOverlay.SetActive (true);
 		CmdDestroyObject (this.gameObject); //destroy on all clients
 		Destroy(this.gameObject); //destroy on local player
 		EndPlayerGame ();

@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class Arrow : NetworkBehaviour {
     public float initSpeed;
     public float maxVelocity;
+    public GameObject sparks;
     private Rigidbody rb;
     private Collider arrow_collider;
     private Vector3 oldVel;
@@ -52,6 +53,9 @@ public class Arrow : NetworkBehaviour {
         
         // Make arrows bounce on collision with environment or taichi sphere. 
         ContactPoint cp = collision.contacts[0];
+
+        // Instantiate sparks and sound effect on contact
+        Instantiate(sparks, cp.point, this.transform.rotation);
         
         if (collision.gameObject.CompareTag("TaichiSphere"))
         {
