@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 54637097361357906}
   - component: {fileID: 65648345968092326}
   - component: {fileID: 114156266635603594}
+  - component: {fileID: 82511780078750190}
   m_Layer: 0
   m_Name: SIAM_boi
   m_TagString: Player
@@ -580,7 +581,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1888655548631070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3253546, y: 2.6688202e-17, z: -11.784891}
+  m_LocalPosition: {x: -3.698095, y: 2.8025203, z: -19.967299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4416034357290346}
@@ -968,6 +969,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6, y: 0.61, z: 1.6}
   m_Center: {x: 0.036, y: -1.85, z: 0.495}
+--- !u!82 &82511780078750190
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1888655548631070}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95079709605828780
 Animator:
   serializedVersion: 3
@@ -1064,6 +1145,8 @@ MonoBehaviour:
   laser: {fileID: 1272371933013474}
   bow: {fileID: 1700669207850840}
   explosion: {fileID: 1000013063239222, guid: 843695ef5e6d39f458b99e399ccc09b1, type: 2}
+  bowClip: {fileID: 8300000, guid: a831a0f4d670ed54bb2879fc466f1cf7, type: 3}
+  pickupClip: {fileID: 8300000, guid: 7f095daf22439d742b096f068329c626, type: 3}
   endGame: {fileID: 1507100605108650, guid: 9292733b9caf26641b03a0fc80fb4386, type: 2}
   delay: 0
 --- !u!114 &114393052720073630

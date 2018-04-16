@@ -45,7 +45,12 @@ public class Player : NetworkBehaviour {
     public GameObject laser;
     public GameObject bow;
     public GameObject explosion;
-  
+
+    //SFX
+    private AudioSource audioSource;
+    public AudioClip bowClip;
+    public AudioClip pickupClip;
+
 	//UI END GAME
 	public GameObject endGame;
 	private Text endStatusText;
@@ -70,6 +75,7 @@ public class Player : NetworkBehaviour {
     {
         controller = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         controller.maxAngularVelocity = terminalRotationSpeed;
         controller.drag = drag;
         taichiShield = null;
@@ -188,7 +194,8 @@ public class Player : NetworkBehaviour {
     public void Shoot(){
 		arrowButton.interactable = false;
 		CmdShoot ();
-	}
+        audioSource.PlayOneShot(bowClip, 1f);
+    }
     //Instantiate an arrow object to shoot at current direction character is facing
     [Command]
     public void CmdShoot()
@@ -276,6 +283,7 @@ public class Player : NetworkBehaviour {
 
 			if (!arrowButton.IsInteractable())
             {
+                audioSource.PlayOneShot(pickupClip, 0.7f);
                 arrowButton.interactable = true;
 			} 
 			CmdDestroyObject (other.gameObject);

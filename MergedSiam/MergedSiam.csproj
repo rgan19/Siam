@@ -329,6 +329,7 @@
     <Compile Include="Assets\Scripts\PlayerScripts\Laser.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\RicochetSound.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\SkillCooldown.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\SkillCrate.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\Taichi.cs" />
