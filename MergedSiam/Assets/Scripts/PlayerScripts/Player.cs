@@ -64,6 +64,8 @@ public class Player : NetworkBehaviour {
 
 	Timer timer;
 
+	bool isGameEnd;
+
 
     //Animation
     private Animator anim;
@@ -93,9 +95,12 @@ public class Player : NetworkBehaviour {
         this.transform.position = new Vector3(Random.Range(10, -10), 3, Random.Range(10, -10));
 
         // Get Timer
-		GameObject timerObj = GameObject.Find ("Timer");
+		GameObject timerObj = GameObject.FindGameObjectWithTag ("Timer");
 		timer = timerObj.GetComponent<Timer> ();
+		timer.resetTimer ();
+		GameManager.ClearPlayerList();
     }
+
 
 	public override void OnStartClient(){
 		base.OnStartClient ();
@@ -103,11 +108,7 @@ public class Player : NetworkBehaviour {
 		Player _player = GetComponent<Player> ();
 		GameManager.RegisterPlayer (_netID, _player);
 	}
-
-	public void Init(){
-		state = "alive";
-		score = 0;
-	}
+		
 
 	public override void OnStartLocalPlayer(){
 		GetComponent<MeshRenderer> ().material.color = Color.green;
@@ -130,19 +131,20 @@ public class Player : NetworkBehaviour {
 
 		gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
 		gameOverOverlay.SetActive (false);
+
+
 	}
     
 
     // Update is called once per frame
    private void Update() {
 
+		if (!isLocalPlayer) {
+			return;
+		}
 		if (timer.isTimeUp) {
 			ShowTimeUp ();
 		
-		}
-		
-		if (!isLocalPlayer) {
-			return;
 		}
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
         Vector3 dir = Vector3.zero;
@@ -156,10 +158,16 @@ public class Player : NetworkBehaviour {
             dir *= moveSpeed * Time.deltaTime;
             if (dir.magnitude > 1)
                 dir.Normalize();*/
-        if (currHealth <= 0)
+		if (currHealth <= 0)
         {
-            anim.SetTrigger("Death");
-            Death();
+			if (!isGameEnd) 
+			{
+				isGameEnd = true;
+				anim.SetTrigger("Death");
+				Death();
+			}
+            
+
 			//CmdDestroyObject (this.gameObject);
 			//Destroy (this.gameObject);
             // TODO: Change the game camera to view top down and see the whole map.
@@ -324,9 +332,10 @@ public class Player : NetworkBehaviour {
 	//Player Death
 	void Death(){
 		CmdReducePlayerCount (); //reduce player count in GameManager
-        gameOverOverlay.SetActive (true);
+        //gameOverOverlay.SetActive (true);
 		CmdDestroyObject (this.gameObject); //destroy on all clients
 		Destroy(this.gameObject); //destroy on local player
+		Debug.Log ("Going to End Player Game");
 		EndPlayerGame ();
 		Debug.Log("Death");
 	}
@@ -334,23 +343,30 @@ public class Player : NetworkBehaviour {
 
 	[Command]
 	void CmdReducePlayerCount(){
-		//GameManager.KillPlayer ();
 		string _netID = GetComponent<NetworkIdentity> ().netId.ToString();
 		string playerNameID = "Player " + _netID;
 		GameManager.DeregisterPlayer (playerNameID);
 		Debug.Log("Number of players alive: "+ GameManager.GetNumberOfPlayersAlive());
 		if (GameManager.GetNumberOfPlayersAlive () <= 1) {
-			ShowEndGame ();
+			CmdShowEndGame ();
 		} 
 	}
 
 
-
-	void ShowEndGame(){
+	[Command]
+	void CmdShowEndGame(){
 		//if player is alive should be tagged
 		foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")){
-			player.GetComponent<Player>().EndGame ();
+			player.GetComponent<Player>().RpcEndGame ();
+			Debug.Log ("In Show End Game");
 		}
+	}
+
+	[ClientRpc]
+	void RpcEndGame(){
+		if (!isLocalPlayer)
+			return;
+		EndGame ();
 	}
 
 	//End whole game. Find the only player alive and set win screen. 
@@ -359,13 +375,22 @@ public class Player : NetworkBehaviour {
 		string playerNameID = "Player " + _netID;
 		Debug.Log ("Player ID: " + playerNameID);
 		Dictionary<string, Player> listOfPlayers = GameManager.players;
-		if (listOfPlayers.ContainsKey(playerNameID)) {
+		if (listOfPlayers.ContainsKey(playerNameID)){
+			//Player p = listOfPlayers [playerNameID];
 			Debug.Log (playerNameID + " win");
 			GameObject endSplash;
 			endSplash = (GameObject)Instantiate (endGame);
+			//gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
+			//p.GameOverOverlay.SetActive(true);
 			gameOverOverlay.SetActive (true);
 			endSplash.GetComponent<Text> ().text = "You win!";
-			endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform> (), false);
+			//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform> (), false);
+			GameManager.players.Clear();
+			GameManager.DeregisterPlayer (playerNameID);
+			Debug.Log ("player list size: " + listOfPlayers.Count);
+			CmdDestroyObject(this.gameObject);
+			Destroy (this.gameObject);
+			//StartCoroutine (CountEndScene ());
 		} else {
 			Debug.Log ("Reached into end game check winner");
 		}
@@ -376,9 +401,10 @@ public class Player : NetworkBehaviour {
 
 	//Each player result when they lose
 	void EndPlayerGame(){
+		gameOverOverlay.SetActive (true);
 		GameObject endSplash;
 		endSplash = (GameObject)Instantiate (endGame);
-		endSplash.GetComponent<Text> ().text = "You lost!";
+		endSplash.GetComponent<Text> ().text = "You lose!";
 		//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform>(), false);
 		//StartCoroutine (CountEndScene());
 
@@ -387,17 +413,19 @@ public class Player : NetworkBehaviour {
 	void EndGameWhenTimesUp() {
 		GameObject endSplash;
 		endSplash = (GameObject)Instantiate (endGame);
-		endSplash.GetComponent<Text> ().text = "Times up you win!";
+		endSplash.GetComponent<Text> ().text = "You have survived today";
 	}
+
 	void ShowTimeUp() {
 		foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")){
 			player.GetComponent<Player>().EndGameWhenTimesUp ();
 			CmdDestroyObject (this.gameObject); //destroy on all clients
 			Destroy(this.gameObject); //destroy on local player
+			GameManager.DeregisterPlayer("Player " + this.netId);
 		}
 	}
 
-	//Incomplete: TO go back to lobby
+	//Incomplete: To be deleted
 	IEnumerator CountEndScene(){
 		Debug.Log ("Going back to lobby");
 		yield return new WaitForSeconds (3);

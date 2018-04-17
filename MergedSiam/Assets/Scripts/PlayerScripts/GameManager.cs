@@ -41,4 +41,8 @@ public class GameManager : MonoBehaviour {
 		players.Values.CopyTo (playerList, 0);
 		return playerList;
 	}
+
+	public static void ClearPlayerList(){
+		players.Clear ();
+	}
 }

@@ -3,6 +3,7 @@ SceneListBegin?
 Assets/Scene/Lobby.unity
 Assets/Scene/Boss.unity
 SceneListEnd?
+bbf3b93c2ec493f19740c6ab756345f1 Assembly-CSharp.dll:.RicochetSound
 fa4b83c80c7ca53ee38c7f6eec291dc7 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyMainMenu
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -16,8 +17,8 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 6af7378a45ad6da4992a71ef50ddc2eb UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 6af7378a45ad6da4992a71ef50ddc2eb UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 9ca6347af5ceb6b0d1c105af31b6722e UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-453b474afa94c745aa51be6378d26c60 Assembly-CSharp.dll:.Player
-5b0c73f963679017be09f8dc1f23d424 Assembly-CSharp.dll:.GameUIController
+4eb443dff98769c5beb2f3570604f6ea Assembly-CSharp.dll:.Player
+51cadce3dee3f49e09192f39a921aa22 Assembly-CSharp.dll:.Timer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Prototype.NetworkLobby.EventSystemChecker
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -121,7 +122,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
-fa6828337cd933ff712013f514f359e5 Assembly-CSharp.dll:.Arrow
+427d3eff24693045badf73ed26ad7a47 Assembly-CSharp.dll:.Arrow
 26215f135eeb48d8fa1189498c107f6c Vuforia.UnityExtensions.dll:Vuforia.AnchorBehaviour
 0561521e336e270e6e5a9c61387cb838 Vuforia.UnityExtensions.dll:Vuforia.AnchorInputListenerBehaviour
 2e0fd93f459db951da0e2e94e2e33fb7 Vuforia.UnityExtensions.dll:Vuforia.AnchorStageBehaviour
@@ -193,7 +194,6 @@ d2a2bd333db22f480a8589e167314ecc Vuforia.UnityExtensions.dll:Vuforia.UserDefined
 3d1b89310e77c34bc0c8d7132231345c Vuforia.UnityExtensions.dll:Vuforia.WireframeBehaviour
 05524b8f659e7bfe5756d1335fec24ba Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 15bea26698002c6c4a3087131232ce5c Vuforia.UnityExtensions.dll:Vuforia.WordBehaviour
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PlayerDeath
 c99104cca6f33db39d236f8efb9aafb4 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyCountdownPanel
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
@@ -228,6 +228,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 5b5f728344e2a781df9bf7f53b997f24 Assembly-CSharp.dll:.Taichi
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Laser
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SpawnPlayers
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GameManager
 e3471e7f0c6f81bf0a6dc4c026d46544 Assembly-CSharp.dll:.VirtualJoystick

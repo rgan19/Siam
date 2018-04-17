@@ -19,6 +19,7 @@ TagManager:
   - Result
   - LobbyManager
   - GameOverOverlay
+  - Timer
   layers:
   - Default
   - TransparentFX

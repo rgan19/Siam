@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
 	private static int hour;
 	private static int min;
 	public bool isTimeUp = false;
+	private static string initialTime = "08:00";
 	// Use this for initialization
 	void Start()
 	{
@@ -49,5 +50,10 @@ public class Timer : MonoBehaviour
 			return "0" + hour + ":" + min+ "0";
 
 	}
-		
+	public void resetTimer() {
+		timeSinceStart = 0;
+		countdownText.text = initialTime;
+		isTimeUp = false;
+	}
+
 }

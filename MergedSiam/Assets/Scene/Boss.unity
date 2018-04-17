@@ -723,6 +723,20 @@ Prefab:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114938168995499608, guid: 03fcc673d0dfedc45bd3a038b0a9931b,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114288843658334080, guid: 03fcc673d0dfedc45bd3a038b0a9931b,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253266732757186, guid: 03fcc673d0dfedc45bd3a038b0a9931b, type: 2}
+      propertyPath: m_TagString
+      value: Timer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03fcc673d0dfedc45bd3a038b0a9931b, type: 2}
   m_IsPrefabParent: 0
@@ -1642,6 +1656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 370945494}
   - component: {fileID: 370945496}
+  - component: {fileID: 370945495}
   m_Layer: 5
   m_Name: Panel
   m_TagString: GameOverOverlay
@@ -1667,6 +1682,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000019073443, y: -0.000002861}
   m_SizeDelta: {x: -337.3, y: -274.63}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &370945495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 370945493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.03676468, g: 0.03352074, b: 0.03352074, a: 0.316}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!222 &370945496
 CanvasRenderer:
   m_ObjectHideFlags: 0
