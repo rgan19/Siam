@@ -54,7 +54,7 @@ public class Player : NetworkBehaviour {
 	//UI END GAME
 	public GameObject endGame;
 	private Text endStatusText;
-	private GameObject gameOverOverlay;
+	//private GameObject gameOverOverlay;
 
     private Rigidbody controller;
     private GameObject taichiShield;
@@ -98,7 +98,7 @@ public class Player : NetworkBehaviour {
 		GameObject timerObj = GameObject.FindGameObjectWithTag ("Timer");
 		timer = timerObj.GetComponent<Timer> ();
 		timer.resetTimer ();
-		GameManager.ClearPlayerList();
+		//GameManager.ClearPlayerList();
     }
 
 
@@ -129,8 +129,8 @@ public class Player : NetworkBehaviour {
 		healthImages[3] = (Image) GameObject.FindGameObjectWithTag ("Life4").GetComponent(typeof(Image));
 		healthImages[4] = (Image) GameObject.FindGameObjectWithTag ("Life5").GetComponent(typeof(Image));
 
-		gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
-		gameOverOverlay.SetActive (false);
+		//gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
+		//gameOverOverlay.SetActive (false);
 
 
 	}
@@ -332,7 +332,7 @@ public class Player : NetworkBehaviour {
 	//Player Death
 	void Death(){
 		CmdReducePlayerCount (); //reduce player count in GameManager
-        //gameOverOverlay.SetActive (true);
+
 		CmdDestroyObject (this.gameObject); //destroy on all clients
 		Destroy(this.gameObject); //destroy on local player
 		Debug.Log ("Going to End Player Game");
@@ -380,9 +380,8 @@ public class Player : NetworkBehaviour {
 			Debug.Log (playerNameID + " win");
 			GameObject endSplash;
 			endSplash = (GameObject)Instantiate (endGame);
-			//gameOverOverlay = GameObject.FindGameObjectWithTag("GameOverOverlay");
-			//p.GameOverOverlay.SetActive(true);
-			gameOverOverlay.SetActive (true);
+
+			//gameOverOverlay.SetActive (true);
 			endSplash.GetComponent<Text> ().text = "You win!";
 			//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform> (), false);
 			GameManager.players.Clear();
@@ -390,7 +389,7 @@ public class Player : NetworkBehaviour {
 			Debug.Log ("player list size: " + listOfPlayers.Count);
 			CmdDestroyObject(this.gameObject);
 			Destroy (this.gameObject);
-			//StartCoroutine (CountEndScene ());
+	
 		} else {
 			Debug.Log ("Reached into end game check winner");
 		}
@@ -401,12 +400,11 @@ public class Player : NetworkBehaviour {
 
 	//Each player result when they lose
 	void EndPlayerGame(){
-		gameOverOverlay.SetActive (true);
+		//gameOverOverlay.SetActive (true);
 		GameObject endSplash;
 		endSplash = (GameObject)Instantiate (endGame);
 		endSplash.GetComponent<Text> ().text = "You lose!";
-		//endSplash.transform.SetParent (gameOverOverlay.GetComponent<RectTransform>(), false);
-		//StartCoroutine (CountEndScene());
+
 
 	}
 
@@ -422,7 +420,9 @@ public class Player : NetworkBehaviour {
 			CmdDestroyObject (this.gameObject); //destroy on all clients
 			Destroy(this.gameObject); //destroy on local player
 			GameManager.DeregisterPlayer("Player " + this.netId);
+
 		}
+
 	}
 
 	//Incomplete: To be deleted
