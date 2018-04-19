@@ -13,7 +13,6 @@ Features implemented:
   - Arrow deduct health of Player and deduction is visible in player's UI
   - Animations of player while doing various actions (moving, shooting, using taichi shield)
   - Creation of arena with custom assets
-  
-Features to be integrated:
   - Sound effects while doing actions
-  - More game balancing
+  - Visual cues when players are doing action, so other players can preempt them
+  - Win/Lose screens
