@@ -13,6 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1
+    y: 51
+    width: 1899
+    height: 1348
+  m_ShowMode: 4
+  m_Title: 
+  m_RootView: {fileID: 7}
+  m_MinSize: {x: 950, y: 521}
+=======
     x: 0
     y: 43
     width: 1536
@@ -21,6 +31,7 @@ MonoBehaviour:
   m_Title: 
   m_RootView: {fileID: 5}
   m_MinSize: {x: 950, y: 542}
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -37,12 +48,21 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
+    y: 984
+    width: 1292
+    height: 314
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 23}
+=======
     y: 460
     width: 901
     height: 271
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
   m_ActualView: {fileID: 19}
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
@@ -66,12 +86,21 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
+    width: 1292
+    height: 1298
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
+  vertical: 1
+  controlID: 31
+=======
     width: 901
     height: 731
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
   controlID: 50
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -86,10 +115,66 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 0
+    y: 863
+    width: 332
+    height: 435
+  m_MinSize: {x: 234, y: 271}
+  m_MaxSize: {x: 10004, y: 10021}
+  m_ActualView: {fileID: 22}
+  m_Panes:
+  - {fileID: 22}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &5
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 6}
+  - {fileID: 4}
+  m_Position:
+    serializedVersion: 2
+    x: 1292
+    y: 0
+    width: 332
+    height: 1298
+  m_MinSize: {x: 234, y: 471}
+  m_MaxSize: {x: 10004, y: 14021}
+  vertical: 1
+  controlID: 91
+--- !u!114 &6
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 332
+    height: 863
+=======
     x: 901
     y: 0
     width: 263
     height: 731
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
@@ -116,8 +201,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
+    width: 1899
+    height: 1348
+=======
     width: 1536
     height: 781
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &6
@@ -136,12 +226,20 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
+    width: 1899
+=======
     width: 1536
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
+<<<<<<< HEAD
+--- !u!114 &9
+=======
 --- !u!114 &7
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_PrefabParentObject: {fileID: 0}
@@ -156,8 +254,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
+    y: 1328
+    width: 1899
+=======
     y: 761
     width: 1536
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -178,6 +281,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
+    width: 1899
+    height: 1298
+  m_MinSize: {x: 711, y: 471}
+  m_MaxSize: {x: 18006, y: 14021}
+  vertical: 1
+  controlID: 89
+--- !u!114 &11
+=======
     width: 1536
     height: 731
   m_MinSize: {x: 709, y: 492}
@@ -185,6 +297,7 @@ MonoBehaviour:
   vertical: 1
   controlID: 105
 --- !u!114 &9
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_PrefabParentObject: {fileID: 0}
@@ -203,6 +316,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
+    width: 1899
+    height: 1298
+  m_MinSize: {x: 711, y: 471}
+  m_MaxSize: {x: 18006, y: 14021}
+  vertical: 0
+  controlID: 90
+--- !u!114 &12
+=======
     width: 1536
     height: 731
   m_MinSize: {x: 709, y: 492}
@@ -210,6 +332,7 @@ MonoBehaviour:
   vertical: 0
   controlID: 106
 --- !u!114 &10
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_PrefabParentObject: {fileID: 0}
@@ -225,11 +348,19 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
+    width: 1292
+    height: 984
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
+  m_ActualView: {fileID: 21}
+=======
     width: 901
     height: 460
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_Panes:
   - {fileID: 16}
   - {fileID: 18}
@@ -251,6 +382,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1624
+    y: 0
+    width: 275
+    height: 1298
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 24}
+=======
     x: 1164
     y: 0
     width: 372
@@ -258,6 +398,7 @@ MonoBehaviour:
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_Panes:
   - {fileID: 21}
   - {fileID: 14}
@@ -407,16 +548,27 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1295
+    y: 100
+    width: 328
+    height: 842
+=======
     x: 903
     y: 92
     width: 259
     height: 710
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
+    m_ExpandedIDs: 0ac7ffff08c8ffff1ecaffff96ccffffbad2ffffbad3ffffd4d5ffff50d8ffff9cfbffff00000000
+=======
     m_ExpandedIDs: d64effff664fffff6a69ffff7269ffffa0dcffff06ddffff06f7ffff0af7ffff84fbffff00000000
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -565,10 +717,17 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1
+    y: 100
+    width: 1290
+    height: 963
+=======
     x: 0
     y: 92
     width: 899
     height: 439
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
   lastFramingTime: 3195.2619349934853
@@ -604,7 +763,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
+<<<<<<< HEAD
+    m_Value: {x: -0.050913602, y: 0.39587885, z: 0.021989575, w: 0.91662663}
+=======
     m_Value: {x: 0, y: 0, z: 0, w: 1}
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_Size:
     m_Target: 1639.4485
     speed: 2
@@ -642,10 +805,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1295
+    y: 963
+    width: 328
+    height: 414
+=======
     x: 0
     y: 552
     width: 899
     height: 250
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -668,10 +838,17 @@ MonoBehaviour:
   m_LastProjectPath: C:\Users\Rachel\Documents\GitHub\Siam\MergedSiam
   m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
+    scrollPos: {x: 0, y: 84}
+    m_SelectedIDs: b82e0000
+    m_LastClickedID: 11960
+    m_ExpandedIDs: 0000000090290000362a00000a2c00002e2d0000f62d0000982e0000522f0000083000009e3000004c310000a8320000d2320000283300004a3a00004c3a00004e3a0000503a0000523a000000ca9a3bffffff7f
+=======
     scrollPos: {x: 0, y: 219}
     m_SelectedIDs: 802e0000
     m_LastClickedID: 11904
     m_ExpandedIDs: 000000008e290000f02b00000a2d0000c62d0000602e00001a2f0000c82f0000f83000003c32000066320000ba320000083800000a3800000c38000000ca9a3bffffff7f
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -699,7 +876,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
+    m_ExpandedIDs: 0000000090290000362a00000a2c00002e2d0000f62d0000982e0000522f0000083000009e3000004c310000a8320000d2320000283300004a3a00004c3a00004e3a0000503a0000523a0000
+=======
     m_ExpandedIDs: 000000008e290000f02b00000a2d0000c62d0000602e00001a2f0000c82f0000f83000003c32000066320000ba320000083800000a3800000c380000
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -776,10 +957,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1
+    y: 1084
+    width: 1290
+    height: 293
+=======
     x: 0
     y: 552
     width: 899
     height: 250
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_PersistentViewDataDictionary: {fileID: 0}
 --- !u!114 &21
 MonoBehaviour:
@@ -803,10 +991,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1627
+    y: 100
+    width: 273
+    height: 1277
+=======
     x: 1166
     y: 92
     width: 370
     height: 710
+>>>>>>> parent of 4d1f5a9... Added UI and other final elements
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0

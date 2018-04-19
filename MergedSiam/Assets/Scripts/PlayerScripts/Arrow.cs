@@ -29,7 +29,7 @@ public class Arrow : NetworkBehaviour {
         
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 		
         oldVel = rb.velocity;
