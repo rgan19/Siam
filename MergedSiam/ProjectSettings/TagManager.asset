@@ -20,6 +20,9 @@ TagManager:
   - LobbyManager
   - GameOverOverlay
   - Timer
+  - ArrowGlow
+  - TaichiGlow
+  - PlayerGlow
   layers:
   - Default
   - TransparentFX

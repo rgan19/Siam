@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
 	private static int timeSinceStart = 0;
-	public static int totalTime = 84;
+	public static int totalTime = 60;
 	public Text countdownText;
 	private static int hour;
 	private static int min;
@@ -35,7 +35,7 @@ public class Timer : MonoBehaviour
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(1.2f);
 			timeSinceStart++;
 		}
 	}

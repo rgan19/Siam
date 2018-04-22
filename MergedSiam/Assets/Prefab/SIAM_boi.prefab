@@ -11,6 +11,23 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1888655548631070}
   m_IsPrefabParent: 1
+--- !u!1 &1057846548956328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4927940046055296}
+  - component: {fileID: 33804645324208070}
+  - component: {fileID: 23718364186766870}
+  m_Layer: 0
+  m_Name: PlayerGlow
+  m_TagString: PlayerGlow
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1081007276746036
 GameObject:
   m_ObjectHideFlags: 1
@@ -581,7 +598,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1888655548631070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.698095, y: 2.8025203, z: -19.967299}
+  m_LocalPosition: {x: 3.78, y: 2.7910757, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4416034357290346}
@@ -589,6 +606,7 @@ Transform:
   - {fileID: 4398135126433968}
   - {fileID: 4820716977550204}
   - {fileID: 4913798378633840}
+  - {fileID: 4927940046055296}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -771,6 +789,19 @@ Transform:
   m_Father: {fileID: 4541839002666384}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4927940046055296
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057846548956328}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.128, z: 0.013}
+  m_LocalScale: {x: 2.7643394, y: 0.041991893, z: 2.7643373}
+  m_Children: []
+  m_Father: {fileID: 4541839002666384}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4931469359344592
 Transform:
   m_ObjectHideFlags: 1
@@ -921,6 +952,40 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23718364186766870
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057846548956328}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: e8266fa63922b5748a6f3363a3945cb7, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!33 &33139471146595782
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -942,6 +1007,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484310521198948}
   m_Mesh: {fileID: 4300000, guid: 391a473d074435843b5e831622d81897, type: 3}
+--- !u!33 &33804645324208070
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1057846548956328}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54637097361357906
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1129,6 +1201,7 @@ MonoBehaviour:
   terminalRotationSpeed: 10
   joystickBehavior: {fileID: 0}
   joystick: {fileID: 0}
+  floorHeight: 2.5
   currHealth: 0
   healthImages:
   - {fileID: 0}
@@ -1145,6 +1218,8 @@ MonoBehaviour:
   laser: {fileID: 1272371933013474}
   bow: {fileID: 1700669207850840}
   explosion: {fileID: 1000013063239222, guid: 843695ef5e6d39f458b99e399ccc09b1, type: 2}
+  playerGlow: {fileID: 1057846548956328}
+  enemyGlowMat: {fileID: 2100000, guid: 7d21908a8ff4b1c4a9d0fc5942030a0b, type: 2}
   bowClip: {fileID: 8300000, guid: a831a0f4d670ed54bb2879fc466f1cf7, type: 3}
   pickupClip: {fileID: 8300000, guid: 7f095daf22439d742b096f068329c626, type: 3}
   endGame: {fileID: 1507100605108650, guid: 9292733b9caf26641b03a0fc80fb4386, type: 2}
@@ -1161,7 +1236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.083333336
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

@@ -1,7 +1,2 @@
 Base path: E:/Program Files/Unity/Editor/Data
 Cmd: initializeCompiler
-<<<<<<< HEAD
-=======
-Cmd: compileComputeKernel
-  api=15 insize=3273 outsize=10261 ok=1
->>>>>>> parent of 4d1f5a9... Added UI and other final elements

@@ -9,6 +9,9 @@ public class SkillCooldown : MonoBehaviour {
     public float cooldown;
     private float cooldownTimer;
     private Button btn;
+    private Image glow;
+    private AudioSource audioSource;
+    public AudioClip beep;
     bool isCooldown;
     void Start()
     {
@@ -17,12 +20,15 @@ public class SkillCooldown : MonoBehaviour {
         cooldownTimer = cooldown;
         btn = GetComponent<Button>();
         btn.onClick.AddListener(CooldownOnClick);
+        glow = (Image)GameObject.FindGameObjectWithTag("TaichiGlow").GetComponent(typeof(Image));
+        audioSource = GetComponent<AudioSource>();
     }
     // Update is called once per frame
     void Update () {
         if (isCooldown)
         { 
             btn.interactable = false;
+            glow.enabled = false;
             imageCooldown.fillAmount -=( 1 / cooldown )* Time.deltaTime;
             cooldownTimer -= Time.deltaTime;
             textCd.text = Mathf.RoundToInt(cooldownTimer).ToString(); 
@@ -32,6 +38,9 @@ public class SkillCooldown : MonoBehaviour {
                 imageCooldown.fillAmount = 0;
                 isCooldown = false;
                 btn.interactable = true;
+                glow.enabled = true;
+                cooldownTimer = cooldown;
+                audioSource.PlayOneShot(beep, 1f);
             }
         }
 	}
