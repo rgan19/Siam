@@ -1,5 +1,5 @@
 # Siam
-Game project for ESC
+Game project for 50.003 Elements of Software Construction module
 
 Features implemented:
   - Lobby (Creating a game lobby, allowing players to join the lobby to start the game)
@@ -16,3 +16,6 @@ Features implemented:
   - Sound effects while doing actions
   - Visual cues when players are doing action, so other players can preempt them
   - Win/Lose screens
+
+Project Video: 
+https://www.youtube.com/watch?v=DXaXZg5mVnw&feature=youtu.be
